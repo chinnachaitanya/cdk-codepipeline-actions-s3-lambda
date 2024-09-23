@@ -16,8 +16,8 @@ export class CodepipelineS3LambdaStack extends cdk.Stack {
     const { sourceAction, sourceOutput } = props;
 
     // Define the pipeline
-    const pipeline = new codepipeline.Pipeline(this, 'MyPipeline', {
-      pipelineName: 'MyS3LambdaPipeline',
+    const pipeline = new codepipeline.Pipeline(this, 'MyPipelineActions', {
+      pipelineName: 'MyS3LambdaPipelineCDK',
     });
 
     // Add the source stage to the pipeline (GitHub)
@@ -69,14 +69,14 @@ export class CodepipelineS3LambdaStack extends cdk.Stack {
         new codepipeline_actions.CloudFormationCreateUpdateStackAction({
           actionName: 'S3_Stack_Deploy',
           stackName: 'S3StackCDK-test',
-          templatePath: sourceOutput.atPath('cdk.out/S3Stack-test.template.json'),
+          templatePath: sourceOutput.atPath('cdk.out/CodepipelineS3Stack-test.template.json'),
           adminPermissions: true,
         }),
         
         new codepipeline_actions.CloudFormationCreateUpdateStackAction({
           actionName: 'Lambda_Stack_Deploy',
           stackName: 'LambdaStackCDK-test',
-          templatePath: sourceOutput.atPath('cdk.out/LambdaStack-test.template.json'),
+          templatePath: sourceOutput.atPath('cdk.out/CodepipelineS3LambdaStack-test.template.json'),
           adminPermissions: true,
         }),
       ],
