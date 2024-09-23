@@ -38,7 +38,7 @@
     "Ref": "SourceBucketDDD2130A"
    },
    "Export": {
-    "Name": "SBucket"
+    "Name": "SBucket-ActionsCodepipelineS3Stack-test"
    }
   },
   "DestinationBucketNameOutput": {
@@ -46,7 +46,7 @@
     "Ref": "DestinationBucket4BECDB47"
    },
    "Export": {
-    "Name": "DBucket"
+    "Name": "DBucket-ActionsCodepipelineS3Stack-test"
    }
   }
  },
