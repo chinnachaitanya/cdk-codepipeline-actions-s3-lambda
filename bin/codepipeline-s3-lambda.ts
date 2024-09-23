@@ -20,7 +20,7 @@ const config = JSON.parse(fs.readFileSync(configFilePath, 'utf-8'));
 
 
 // Create the S3 stack
-const s3Stack = new S3Stack(app, `CodepipelineS3Stack-${environment}`, {
+const s3Stack = new S3Stack(app, `ActionsCodepipelineS3Stack-${environment}`, {
   sourceBucketName: config.sourceBucketName,
   destinationBucketName: config.destinationBucketName,
   env: {
@@ -36,13 +36,13 @@ const sourceAction = new codepipeline_actions.GitHubSourceAction({
   actionName: 'GitHub_Source',
   owner: 'chinnachaitanya',
   repo: 'cdk-codepipeline-actions-s3-lambda',
-  oauthToken: cdk.SecretValue.secretsManager('github-token1'),  // Use a secret manager for GitHub token
+  oauthToken: cdk.SecretValue.secretsManager('github-token2'),  // Use a secret manager for GitHub token
   output: sourceOutput,
   branch: 'main',  // Change if using a different branch
 });
 
 // Create the CodePipeline stack
-const pipelineStack = new CodepipelineS3LambdaStack(app, `CodepipelineS3LambdaStack-${environment}`, {
+const pipelineStack = new CodepipelineS3LambdaStack(app, `ActionsCodepipelineS3LambdaStack-${environment}`, {
   sourceAction: sourceAction,  // Pass sourceAction
   sourceOutput: sourceOutput,  // Pass sourceOutput
   env: {
@@ -52,7 +52,7 @@ const pipelineStack = new CodepipelineS3LambdaStack(app, `CodepipelineS3LambdaSt
 });
 
 // Create the Lambda stack
-const lambdaStack = new LambdaStack(app, `CodepipelineLambdaStack-${environment}`, {
+const lambdaStack = new LambdaStack(app, `ActionsCodepipelineLambdaStack-${environment}`, {
   sourceBucketName: config.sourceBucketName,
   destinationBucketName: config.destinationBucketName,
   env: {

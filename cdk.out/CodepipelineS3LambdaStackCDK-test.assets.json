@@ -1,0 +1,20 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "1bc852da57b111f70aee0cbbb6dfec2d4d71b5dadbf5be34f21ad40b22070fc8": {
+      "source": {
+        "path": "CodepipelineS3LambdaStackCDK-test.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "011528270026-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-011528270026-us-east-1",
+          "objectKey": "1bc852da57b111f70aee0cbbb6dfec2d4d71b5dadbf5be34f21ad40b22070fc8.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::011528270026:role/cdk-hnb659fds-file-publishing-role-011528270026-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

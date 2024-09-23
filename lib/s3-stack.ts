@@ -27,12 +27,12 @@ export class S3Stack extends cdk.Stack {
     // Export bucket names
     new cdk.CfnOutput(this, 'SourceBucketNameOutput', {
       value: this.sourceBucket.bucketName,
-      exportName: 'SourceBucketName7',
+      exportName: 'SrcBucketName',
     });
 
     new cdk.CfnOutput(this, 'DestinationBucketNameOutput', {
       value: this.destinationBucket.bucketName,
-      exportName: 'DestinationBucketName7',
+      exportName: 'DestBucketName',
     });
   }
 }
