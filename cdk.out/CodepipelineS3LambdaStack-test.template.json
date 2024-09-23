@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "MyPipelineActionsArtifactsBucket6CD2249B": {
+  "MyCodePipelineActionsArtifactsBucketF0A24185": {
    "Type": "AWS::S3::Bucket",
    "Properties": {
     "BucketEncryption": {
@@ -22,14 +22,14 @@
    "UpdateReplacePolicy": "Retain",
    "DeletionPolicy": "Retain",
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/ArtifactsBucket/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/ArtifactsBucket/Resource"
    }
   },
-  "MyPipelineActionsArtifactsBucketPolicyAB76FC6B": {
+  "MyCodePipelineActionsArtifactsBucketPolicyB0632A71": {
    "Type": "AWS::S3::BucketPolicy",
    "Properties": {
     "Bucket": {
-     "Ref": "MyPipelineActionsArtifactsBucket6CD2249B"
+     "Ref": "MyCodePipelineActionsArtifactsBucketF0A24185"
     },
     "PolicyDocument": {
      "Statement": [
@@ -47,7 +47,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -57,7 +57,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
@@ -72,10 +72,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/ArtifactsBucket/Policy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/ArtifactsBucket/Policy/Resource"
    }
   },
-  "MyPipelineActionsRoleAA255482": {
+  "MyCodePipelineActionsRoleCC4C02B2": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -92,10 +92,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Role/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Role/Resource"
    }
   },
-  "MyPipelineActionsRoleDefaultPolicyBABAEBF4": {
+  "MyCodePipelineActionsRoleDefaultPolicy2FE696C1": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -117,7 +117,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -127,7 +127,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
@@ -143,19 +143,19 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsBuildCodePipelineActionRoleB838B957",
+          "MyCodePipelineActionsBuildCodePipelineActionRoleF70BC42E",
           "Arn"
          ]
         },
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRole11C32260",
+          "MyCodePipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleEB8125C4",
           "Arn"
          ]
         },
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsDeployS3StackDeployCDKCodePipelineActionRole81AAE6B1",
+          "MyCodePipelineActionsDeployS3StackDeployCDKCodePipelineActionRole5D17297D",
           "Arn"
          ]
         }
@@ -164,31 +164,31 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "MyPipelineActionsRoleDefaultPolicyBABAEBF4",
+    "PolicyName": "MyCodePipelineActionsRoleDefaultPolicy2FE696C1",
     "Roles": [
      {
-      "Ref": "MyPipelineActionsRoleAA255482"
+      "Ref": "MyCodePipelineActionsRoleCC4C02B2"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Role/DefaultPolicy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Role/DefaultPolicy/Resource"
    }
   },
-  "MyPipelineActionsD89E2B30": {
+  "MyCodePipelineActions44E34933": {
    "Type": "AWS::CodePipeline::Pipeline",
    "Properties": {
     "ArtifactStore": {
      "Location": {
-      "Ref": "MyPipelineActionsArtifactsBucket6CD2249B"
+      "Ref": "MyCodePipelineActionsArtifactsBucketF0A24185"
      },
      "Type": "S3"
     },
-    "Name": "MyS3LambdaPipelineCDK",
+    "Name": "MyS3LambdaCodePipeline",
     "PipelineType": "V2",
     "RoleArn": {
      "Fn::GetAtt": [
-      "MyPipelineActionsRoleAA255482",
+      "MyCodePipelineActionsRoleCC4C02B2",
       "Arn"
      ]
     },
@@ -242,7 +242,7 @@
         "Name": "Build",
         "RoleArn": {
          "Fn::GetAtt": [
-          "MyPipelineActionsBuildCodePipelineActionRoleB838B957",
+          "MyCodePipelineActionsBuildCodePipelineActionRoleF70BC42E",
           "Arn"
          ]
         },
@@ -265,7 +265,7 @@
          "Capabilities": "CAPABILITY_NAMED_IAM",
          "RoleArn": {
           "Fn::GetAtt": [
-           "MyPipelineActionsDeployS3StackDeployCDKRole0F2B8E06",
+           "MyCodePipelineActionsDeployS3StackDeployCDKRole6E449090",
            "Arn"
           ]
          },
@@ -280,7 +280,7 @@
         "Name": "S3_Stack_Deploy_CDK",
         "RoleArn": {
          "Fn::GetAtt": [
-          "MyPipelineActionsDeployS3StackDeployCDKCodePipelineActionRole81AAE6B1",
+          "MyCodePipelineActionsDeployS3StackDeployCDKCodePipelineActionRole5D17297D",
           "Arn"
          ]
         },
@@ -298,7 +298,7 @@
          "Capabilities": "CAPABILITY_NAMED_IAM",
          "RoleArn": {
           "Fn::GetAtt": [
-           "MyPipelineActionsDeployLambdaStackDeployCDKRole7F9DBCB3",
+           "MyCodePipelineActionsDeployLambdaStackDeployCDKRoleEEF9BB90",
            "Arn"
           ]
          },
@@ -313,7 +313,7 @@
         "Name": "Lambda_Stack_Deploy_CDK",
         "RoleArn": {
          "Fn::GetAtt": [
-          "MyPipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRole11C32260",
+          "MyCodePipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleEB8125C4",
           "Arn"
          ]
         },
@@ -325,14 +325,14 @@
     ]
    },
    "DependsOn": [
-    "MyPipelineActionsRoleDefaultPolicyBABAEBF4",
-    "MyPipelineActionsRoleAA255482"
+    "MyCodePipelineActionsRoleDefaultPolicy2FE696C1",
+    "MyCodePipelineActionsRoleCC4C02B2"
    ],
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Resource"
    }
   },
-  "MyPipelineActionsSourceGitHubSourceWebhookResource7CABB75C": {
+  "MyCodePipelineActionsSourceGitHubSourceWebhookResource62495014": {
    "Type": "AWS::CodePipeline::Webhook",
    "Properties": {
     "Authentication": "GITHUB_HMAC",
@@ -348,15 +348,15 @@
     "RegisterWithThirdParty": true,
     "TargetAction": "GitHub_Source",
     "TargetPipeline": {
-     "Ref": "MyPipelineActionsD89E2B30"
+     "Ref": "MyCodePipelineActions44E34933"
     },
     "TargetPipelineVersion": 1
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Source/GitHub_Source/WebhookResource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Source/GitHub_Source/WebhookResource"
    }
   },
-  "MyPipelineActionsBuildCodePipelineActionRoleB838B957": {
+  "MyCodePipelineActionsBuildCodePipelineActionRoleF70BC42E": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -373,10 +373,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Build/Build/CodePipelineActionRole/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Build/Build/CodePipelineActionRole/Resource"
    }
   },
-  "MyPipelineActionsBuildCodePipelineActionRoleDefaultPolicy7972FF38": {
+  "MyCodePipelineActionsBuildCodePipelineActionRoleDefaultPolicy81998692": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -398,18 +398,18 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "MyPipelineActionsBuildCodePipelineActionRoleDefaultPolicy7972FF38",
+    "PolicyName": "MyCodePipelineActionsBuildCodePipelineActionRoleDefaultPolicy81998692",
     "Roles": [
      {
-      "Ref": "MyPipelineActionsBuildCodePipelineActionRoleB838B957"
+      "Ref": "MyCodePipelineActionsBuildCodePipelineActionRoleF70BC42E"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource"
    }
   },
-  "MyPipelineActionsDeployS3StackDeployCDKCodePipelineActionRole81AAE6B1": {
+  "MyCodePipelineActionsDeployS3StackDeployCDKCodePipelineActionRole5D17297D": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -426,10 +426,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/S3_Stack_Deploy_CDK/CodePipelineActionRole/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/S3_Stack_Deploy_CDK/CodePipelineActionRole/Resource"
    }
   },
-  "MyPipelineActionsDeployS3StackDeployCDKCodePipelineActionRoleDefaultPolicy3B0094F6": {
+  "MyCodePipelineActionsDeployS3StackDeployCDKCodePipelineActionRoleDefaultPolicy81633A84": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -439,7 +439,7 @@
        "Effect": "Allow",
        "Resource": {
         "Fn::GetAtt": [
-         "MyPipelineActionsDeployS3StackDeployCDKRole0F2B8E06",
+         "MyCodePipelineActionsDeployS3StackDeployCDKRole6E449090",
          "Arn"
         ]
        }
@@ -454,7 +454,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -464,7 +464,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
@@ -490,18 +490,18 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "MyPipelineActionsDeployS3StackDeployCDKCodePipelineActionRoleDefaultPolicy3B0094F6",
+    "PolicyName": "MyCodePipelineActionsDeployS3StackDeployCDKCodePipelineActionRoleDefaultPolicy81633A84",
     "Roles": [
      {
-      "Ref": "MyPipelineActionsDeployS3StackDeployCDKCodePipelineActionRole81AAE6B1"
+      "Ref": "MyCodePipelineActionsDeployS3StackDeployCDKCodePipelineActionRole5D17297D"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/S3_Stack_Deploy_CDK/CodePipelineActionRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/S3_Stack_Deploy_CDK/CodePipelineActionRole/DefaultPolicy/Resource"
    }
   },
-  "MyPipelineActionsDeployS3StackDeployCDKRole0F2B8E06": {
+  "MyCodePipelineActionsDeployS3StackDeployCDKRole6E449090": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -518,10 +518,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/S3_Stack_Deploy_CDK/Role/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/S3_Stack_Deploy_CDK/Role/Resource"
    }
   },
-  "MyPipelineActionsDeployS3StackDeployCDKRoleDefaultPolicyA4CB6859": {
+  "MyCodePipelineActionsDeployS3StackDeployCDKRoleDefaultPolicy5E0A7AD8": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -536,7 +536,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -546,7 +546,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
@@ -564,18 +564,18 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "MyPipelineActionsDeployS3StackDeployCDKRoleDefaultPolicyA4CB6859",
+    "PolicyName": "MyCodePipelineActionsDeployS3StackDeployCDKRoleDefaultPolicy5E0A7AD8",
     "Roles": [
      {
-      "Ref": "MyPipelineActionsDeployS3StackDeployCDKRole0F2B8E06"
+      "Ref": "MyCodePipelineActionsDeployS3StackDeployCDKRole6E449090"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/S3_Stack_Deploy_CDK/Role/DefaultPolicy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/S3_Stack_Deploy_CDK/Role/DefaultPolicy/Resource"
    }
   },
-  "MyPipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRole11C32260": {
+  "MyCodePipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleEB8125C4": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -592,10 +592,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/Lambda_Stack_Deploy_CDK/CodePipelineActionRole/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/Lambda_Stack_Deploy_CDK/CodePipelineActionRole/Resource"
    }
   },
-  "MyPipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleDefaultPolicy8776EB2D": {
+  "MyCodePipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleDefaultPolicy7D6581A2": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -605,7 +605,7 @@
        "Effect": "Allow",
        "Resource": {
         "Fn::GetAtt": [
-         "MyPipelineActionsDeployLambdaStackDeployCDKRole7F9DBCB3",
+         "MyCodePipelineActionsDeployLambdaStackDeployCDKRoleEEF9BB90",
          "Arn"
         ]
        }
@@ -620,7 +620,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -630,7 +630,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
@@ -656,18 +656,18 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "MyPipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleDefaultPolicy8776EB2D",
+    "PolicyName": "MyCodePipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleDefaultPolicy7D6581A2",
     "Roles": [
      {
-      "Ref": "MyPipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRole11C32260"
+      "Ref": "MyCodePipelineActionsDeployLambdaStackDeployCDKCodePipelineActionRoleEB8125C4"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/Lambda_Stack_Deploy_CDK/CodePipelineActionRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/Lambda_Stack_Deploy_CDK/CodePipelineActionRole/DefaultPolicy/Resource"
    }
   },
-  "MyPipelineActionsDeployLambdaStackDeployCDKRole7F9DBCB3": {
+  "MyCodePipelineActionsDeployLambdaStackDeployCDKRoleEEF9BB90": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -684,10 +684,10 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/Lambda_Stack_Deploy_CDK/Role/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/Lambda_Stack_Deploy_CDK/Role/Resource"
    }
   },
-  "MyPipelineActionsDeployLambdaStackDeployCDKRoleDefaultPolicy4544017C": {
+  "MyCodePipelineActionsDeployLambdaStackDeployCDKRoleDefaultPolicy0BAEAE95": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -702,7 +702,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -712,7 +712,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
@@ -730,15 +730,15 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "MyPipelineActionsDeployLambdaStackDeployCDKRoleDefaultPolicy4544017C",
+    "PolicyName": "MyCodePipelineActionsDeployLambdaStackDeployCDKRoleDefaultPolicy0BAEAE95",
     "Roles": [
      {
-      "Ref": "MyPipelineActionsDeployLambdaStackDeployCDKRole7F9DBCB3"
+      "Ref": "MyCodePipelineActionsDeployLambdaStackDeployCDKRoleEEF9BB90"
      }
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipelineActions/Deploy/Lambda_Stack_Deploy_CDK/Role/DefaultPolicy/Resource"
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyCodePipelineActions/Deploy/Lambda_Stack_Deploy_CDK/Role/DefaultPolicy/Resource"
    }
   },
   "BuildProjectRoleAA92C755": {
@@ -831,7 +831,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "MyPipelineActionsArtifactsBucket6CD2249B",
+          "MyCodePipelineActionsArtifactsBucketF0A24185",
           "Arn"
          ]
         },
@@ -841,7 +841,7 @@
           [
            {
             "Fn::GetAtt": [
-             "MyPipelineActionsArtifactsBucket6CD2249B",
+             "MyCodePipelineActionsArtifactsBucketF0A24185",
              "Arn"
             ]
            },
