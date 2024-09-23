@@ -204,7 +204,7 @@
         },
         "Configuration": {
          "Owner": "chinnachaitanya",
-         "Repo": "cdkcodepipe",
+         "Repo": "cdk-codepipeline-actions-s3-lambda",
          "Branch": "main",
          "OAuthToken": "{{resolve:secretsmanager:github-token1:SecretString:::}}",
          "PollForSourceChanges": false

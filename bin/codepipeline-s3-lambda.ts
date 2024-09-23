@@ -35,7 +35,7 @@ const sourceOutput = new codepipeline.Artifact();
 const sourceAction = new codepipeline_actions.GitHubSourceAction({
   actionName: 'GitHub_Source',
   owner: 'chinnachaitanya',
-  repo: 'cdkcodepipe',
+  repo: 'cdk-codepipeline-actions-s3-lambda',
   oauthToken: cdk.SecretValue.secretsManager('github-token1'),  // Use a secret manager for GitHub token
   output: sourceOutput,
   branch: 'main',  // Change if using a different branch

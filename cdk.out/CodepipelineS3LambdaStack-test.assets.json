@@ -1,7 +1,7 @@
 {
   "version": "36.0.0",
   "files": {
-    "c236a0bd1f3fe462f195b9e683c26e239dd15838393be885fd8499ac8b8f421d": {
+    "8aa9c01ed69e925ebf56d128cf0862e0524cb99843b994116214ef382bb06af7": {
       "source": {
         "path": "CodepipelineS3LambdaStack-test.template.json",
         "packaging": "file"
@@ -9,7 +9,7 @@
       "destinations": {
         "011528270026-us-east-1": {
           "bucketName": "cdk-hnb659fds-assets-011528270026-us-east-1",
-          "objectKey": "c236a0bd1f3fe462f195b9e683c26e239dd15838393be885fd8499ac8b8f421d.json",
+          "objectKey": "8aa9c01ed69e925ebf56d128cf0862e0524cb99843b994116214ef382bb06af7.json",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::011528270026:role/cdk-hnb659fds-file-publishing-role-011528270026-us-east-1"
         }
