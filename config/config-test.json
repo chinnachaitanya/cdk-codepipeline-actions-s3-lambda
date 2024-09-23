@@ -1,0 +1,4 @@
+{
+    "sourceBucketName": "my-test-source-bucket-pipeline-s3",
+    "destinationBucketName": "my-test-destination-bucket-pipeline-s3"
+  }

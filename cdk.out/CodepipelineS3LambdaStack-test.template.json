@@ -1,0 +1,944 @@
+{
+ "Resources": {
+  "MyPipelineArtifactsBucket727923DD": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "aws:kms"
+       }
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/ArtifactsBucket/Resource"
+   }
+  },
+  "MyPipelineArtifactsBucketPolicyDFDA675B": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "MyPipelineArtifactsBucket727923DD"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/ArtifactsBucket/Policy/Resource"
+   }
+  },
+  "MyPipelineRoleC0D47CA4": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Role/Resource"
+   }
+  },
+  "MyPipelineRoleDefaultPolicy34F09EFA": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:Abort*",
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineBuildCodePipelineActionRole5CCD100A",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "MyPipelineDeployLambdaStackDeployCodePipelineActionRole5C8EDF0A",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "MyPipelineDeployS3StackDeployCodePipelineActionRoleE5F7CE53",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "MyPipelineRoleDefaultPolicy34F09EFA",
+    "Roles": [
+     {
+      "Ref": "MyPipelineRoleC0D47CA4"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Role/DefaultPolicy/Resource"
+   }
+  },
+  "MyPipelineAED38ECF": {
+   "Type": "AWS::CodePipeline::Pipeline",
+   "Properties": {
+    "ArtifactStore": {
+     "Location": {
+      "Ref": "MyPipelineArtifactsBucket727923DD"
+     },
+     "Type": "S3"
+    },
+    "Name": "MyS3LambdaPipeline",
+    "PipelineType": "V2",
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "MyPipelineRoleC0D47CA4",
+      "Arn"
+     ]
+    },
+    "Stages": [
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Source",
+         "Owner": "ThirdParty",
+         "Provider": "GitHub",
+         "Version": "1"
+        },
+        "Configuration": {
+         "Owner": "chinnachaitanya",
+         "Repo": "cdkcodepipe",
+         "Branch": "main",
+         "OAuthToken": "{{resolve:secretsmanager:github-token1:SecretString:::}}",
+         "PollForSourceChanges": false
+        },
+        "Name": "GitHub_Source",
+        "OutputArtifacts": [
+         {
+          "Name": "Artifact_Source_GitHub_Source"
+         }
+        ],
+        "RunOrder": 1
+       }
+      ],
+      "Name": "Source"
+     },
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Build",
+         "Owner": "AWS",
+         "Provider": "CodeBuild",
+         "Version": "1"
+        },
+        "Configuration": {
+         "ProjectName": {
+          "Ref": "BuildProject097C5DB7"
+         }
+        },
+        "InputArtifacts": [
+         {
+          "Name": "Artifact_Source_GitHub_Source"
+         }
+        ],
+        "Name": "Build",
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "MyPipelineBuildCodePipelineActionRole5CCD100A",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       }
+      ],
+      "Name": "Build"
+     },
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Deploy",
+         "Owner": "AWS",
+         "Provider": "CloudFormation",
+         "Version": "1"
+        },
+        "Configuration": {
+         "StackName": "S3StackCDK-test",
+         "Capabilities": "CAPABILITY_NAMED_IAM",
+         "RoleArn": {
+          "Fn::GetAtt": [
+           "MyPipelineDeployS3StackDeployRoleF9AE1CFB",
+           "Arn"
+          ]
+         },
+         "ActionMode": "CREATE_UPDATE",
+         "TemplatePath": "Artifact_Source_GitHub_Source::cdk.out/S3Stack-test.template.json"
+        },
+        "InputArtifacts": [
+         {
+          "Name": "Artifact_Source_GitHub_Source"
+         }
+        ],
+        "Name": "S3_Stack_Deploy",
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "MyPipelineDeployS3StackDeployCodePipelineActionRoleE5F7CE53",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       },
+       {
+        "ActionTypeId": {
+         "Category": "Deploy",
+         "Owner": "AWS",
+         "Provider": "CloudFormation",
+         "Version": "1"
+        },
+        "Configuration": {
+         "StackName": "LambdaStackCDK-test",
+         "Capabilities": "CAPABILITY_NAMED_IAM",
+         "RoleArn": {
+          "Fn::GetAtt": [
+           "MyPipelineDeployLambdaStackDeployRole7C885FDB",
+           "Arn"
+          ]
+         },
+         "ActionMode": "CREATE_UPDATE",
+         "TemplatePath": "Artifact_Source_GitHub_Source::cdk.out/LambdaStack-test.template.json"
+        },
+        "InputArtifacts": [
+         {
+          "Name": "Artifact_Source_GitHub_Source"
+         }
+        ],
+        "Name": "Lambda_Stack_Deploy",
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "MyPipelineDeployLambdaStackDeployCodePipelineActionRole5C8EDF0A",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       }
+      ],
+      "Name": "Deploy"
+     }
+    ]
+   },
+   "DependsOn": [
+    "MyPipelineRoleDefaultPolicy34F09EFA",
+    "MyPipelineRoleC0D47CA4"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Resource"
+   }
+  },
+  "MyPipelineSourceGitHubSourceWebhookResourceE616042B": {
+   "Type": "AWS::CodePipeline::Webhook",
+   "Properties": {
+    "Authentication": "GITHUB_HMAC",
+    "AuthenticationConfiguration": {
+     "SecretToken": "{{resolve:secretsmanager:github-token1:SecretString:::}}"
+    },
+    "Filters": [
+     {
+      "JsonPath": "$.ref",
+      "MatchEquals": "refs/heads/{Branch}"
+     }
+    ],
+    "RegisterWithThirdParty": true,
+    "TargetAction": "GitHub_Source",
+    "TargetPipeline": {
+     "Ref": "MyPipelineAED38ECF"
+    },
+    "TargetPipelineVersion": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Source/GitHub_Source/WebhookResource"
+   }
+  },
+  "MyPipelineBuildCodePipelineActionRole5CCD100A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "arn:aws:iam::011528270026:root"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Build/Build/CodePipelineActionRole/Resource"
+   }
+  },
+  "MyPipelineBuildCodePipelineActionRoleDefaultPolicyE9A1941C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "codebuild:BatchGetBuilds",
+        "codebuild:StartBuild",
+        "codebuild:StopBuild"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BuildProject097C5DB7",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "MyPipelineBuildCodePipelineActionRoleDefaultPolicyE9A1941C",
+    "Roles": [
+     {
+      "Ref": "MyPipelineBuildCodePipelineActionRole5CCD100A"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "MyPipelineDeployS3StackDeployCodePipelineActionRoleE5F7CE53": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "arn:aws:iam::011528270026:root"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/S3_Stack_Deploy/CodePipelineActionRole/Resource"
+   }
+  },
+  "MyPipelineDeployS3StackDeployCodePipelineActionRoleDefaultPolicy861550B4": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "MyPipelineDeployS3StackDeployRoleF9AE1CFB",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cloudformation:CreateStack",
+        "cloudformation:DescribeStack*",
+        "cloudformation:GetStackPolicy",
+        "cloudformation:GetTemplate*",
+        "cloudformation:SetStackPolicy",
+        "cloudformation:UpdateStack",
+        "cloudformation:ValidateTemplate"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:cloudformation:us-east-1:011528270026:stack/S3StackCDK-test/*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "MyPipelineDeployS3StackDeployCodePipelineActionRoleDefaultPolicy861550B4",
+    "Roles": [
+     {
+      "Ref": "MyPipelineDeployS3StackDeployCodePipelineActionRoleE5F7CE53"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/S3_Stack_Deploy/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "MyPipelineDeployS3StackDeployRoleF9AE1CFB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/S3_Stack_Deploy/Role/Resource"
+   }
+  },
+  "MyPipelineDeployS3StackDeployRoleDefaultPolicyACDF88E6": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "MyPipelineDeployS3StackDeployRoleDefaultPolicyACDF88E6",
+    "Roles": [
+     {
+      "Ref": "MyPipelineDeployS3StackDeployRoleF9AE1CFB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/S3_Stack_Deploy/Role/DefaultPolicy/Resource"
+   }
+  },
+  "MyPipelineDeployLambdaStackDeployCodePipelineActionRole5C8EDF0A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "arn:aws:iam::011528270026:root"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/Lambda_Stack_Deploy/CodePipelineActionRole/Resource"
+   }
+  },
+  "MyPipelineDeployLambdaStackDeployCodePipelineActionRoleDefaultPolicy7BB64AA3": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "MyPipelineDeployLambdaStackDeployRole7C885FDB",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cloudformation:CreateStack",
+        "cloudformation:DescribeStack*",
+        "cloudformation:GetStackPolicy",
+        "cloudformation:GetTemplate*",
+        "cloudformation:SetStackPolicy",
+        "cloudformation:UpdateStack",
+        "cloudformation:ValidateTemplate"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:cloudformation:us-east-1:011528270026:stack/LambdaStackCDK-test/*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "MyPipelineDeployLambdaStackDeployCodePipelineActionRoleDefaultPolicy7BB64AA3",
+    "Roles": [
+     {
+      "Ref": "MyPipelineDeployLambdaStackDeployCodePipelineActionRole5C8EDF0A"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/Lambda_Stack_Deploy/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "MyPipelineDeployLambdaStackDeployRole7C885FDB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/Lambda_Stack_Deploy/Role/Resource"
+   }
+  },
+  "MyPipelineDeployLambdaStackDeployRoleDefaultPolicy24218DA1": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "MyPipelineDeployLambdaStackDeployRoleDefaultPolicy24218DA1",
+    "Roles": [
+     {
+      "Ref": "MyPipelineDeployLambdaStackDeployRole7C885FDB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/MyPipeline/Deploy/Lambda_Stack_Deploy/Role/DefaultPolicy/Resource"
+   }
+  },
+  "BuildProjectRoleAA92C755": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codebuild.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/BuildProject/Role/Resource"
+   }
+  },
+  "BuildProjectRoleDefaultPolicy3E9F248C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:logs:us-east-1:011528270026:log-group:/aws/codebuild/",
+           {
+            "Ref": "BuildProject097C5DB7"
+           },
+           ":*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:logs:us-east-1:011528270026:log-group:/aws/codebuild/",
+           {
+            "Ref": "BuildProject097C5DB7"
+           }
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "codebuild:BatchPutCodeCoverages",
+        "codebuild:BatchPutTestCases",
+        "codebuild:CreateReport",
+        "codebuild:CreateReportGroup",
+        "codebuild:UpdateReport"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:codebuild:us-east-1:011528270026:report-group/",
+          {
+           "Ref": "BuildProject097C5DB7"
+          },
+          "-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "MyPipelineArtifactsBucket727923DD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "MyPipelineArtifactsBucket727923DD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BuildProjectRoleDefaultPolicy3E9F248C",
+    "Roles": [
+     {
+      "Ref": "BuildProjectRoleAA92C755"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/BuildProject/Role/DefaultPolicy/Resource"
+   }
+  },
+  "BuildProject097C5DB7": {
+   "Type": "AWS::CodeBuild::Project",
+   "Properties": {
+    "Artifacts": {
+     "Type": "CODEPIPELINE"
+    },
+    "Cache": {
+     "Type": "NO_CACHE"
+    },
+    "EncryptionKey": "alias/aws/s3",
+    "Environment": {
+     "ComputeType": "BUILD_GENERAL1_SMALL",
+     "Image": "aws/codebuild/standard:6.0",
+     "ImagePullCredentialsType": "CODEBUILD",
+     "PrivilegedMode": false,
+     "Type": "LINUX_CONTAINER"
+    },
+    "ServiceRole": {
+     "Fn::GetAtt": [
+      "BuildProjectRoleAA92C755",
+      "Arn"
+     ]
+    },
+    "Source": {
+     "BuildSpec": "{\n  \"version\": 0.2,\n  \"phases\": {\n    \"install\": {\n      \"runtime-versions\": {\n        \"nodejs\": \"14\"\n      },\n      \"commands\": [\n        \"npm install\",\n        \"npm install -g aws-cdk \"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"npm run build\",\n        \"cdk synth --output ./cdk.out\"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"base-directory\": \"cdk.out\",\n    \"files\": [\n      \"**/*\"\n    ]\n  }\n}",
+     "Type": "CODEPIPELINE"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/BuildProject/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02OwQ6CMBBEv4V7WQtGP0B/gODBoyntGhcKJZRKTNN/N9AaPM3byWR2SihOHHgmFptL1eWaGvC3WciOicU+vDQKRxpR04Dgq0Ts+hz++Y7Ny5guMHsEf3Gyw3m1E0WpjCb52e14B0aiB18bvRVtuid/mXVF40irfUI1mRbl9iZhCKxGa9wkY1XiwAajEFp7eJccijPwrLVE+eSGmXqEOuoXcvNKsAkBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3LambdaStack-test/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

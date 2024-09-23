@@ -1,0 +1,87 @@
+{
+ "Resources": {
+  "SourceBucketDDD2130A": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketName": "my-test-source-bucket-pipeline-s3"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3Stack-test/SourceBucket/Resource"
+   }
+  },
+  "DestinationBucket4BECDB47": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketName": "my-test-destination-bucket-pipeline-s3"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3Stack-test/DestinationBucket/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/yXIQQ5AMBBA0bPYt6MIB+AAEg4gVSOpUmI6LMTdBav/8lNIcgUq0idJMzg52x6uNmjjhD6powyuko3DIKrR/7pf1hw2/maDtPJu8BZ+HRAmio9UQVKAiiayVu7sg10Qmr8P5D1/U3EAAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CodepipelineS3Stack-test/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "SourceBucketNameOutput": {
+   "Value": {
+    "Ref": "SourceBucketDDD2130A"
+   },
+   "Export": {
+    "Name": "SourceBucketName7"
+   }
+  },
+  "DestinationBucketNameOutput": {
+   "Value": {
+    "Ref": "DestinationBucket4BECDB47"
+   },
+   "Export": {
+    "Name": "DestinationBucketName7"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

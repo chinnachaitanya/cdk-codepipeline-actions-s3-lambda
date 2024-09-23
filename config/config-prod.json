@@ -1,0 +1,5 @@
+{
+    "sourceBucketName": "prod-source-bucket-codepipeline-s3",
+    "destinationBucketName": "prod-destination-bucket-codepipeline-s3"
+  }
+  
