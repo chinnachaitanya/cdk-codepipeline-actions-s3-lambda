@@ -20,7 +20,7 @@ const config = JSON.parse(fs.readFileSync(configFilePath, 'utf-8'));
 
 
 // Create the S3 stack
-const s3Stack = new S3Stack(app, `ActionsCodepipelineS3Stack-${environment}`, {
+const s3Stack = new S3Stack(app, `ActionCodepipelineS3Stack-${environment}`, {
   sourceBucketName: config.sourceBucketName,
   destinationBucketName: config.destinationBucketName,
   env: {
@@ -42,7 +42,7 @@ const sourceAction = new codepipeline_actions.GitHubSourceAction({
 });
 
 // Create the CodePipeline stack
-const pipelineStack = new CodepipelineS3LambdaStack(app, `ActionsCodepipelineS3LambdaStack-${environment}`, {
+const pipelineStack = new CodepipelineS3LambdaStack(app, `ActionCodepipelineS3LambdaStack-${environment}`, {
   sourceAction: sourceAction,  // Pass sourceAction
   sourceOutput: sourceOutput,  // Pass sourceOutput
   env: {
@@ -52,7 +52,7 @@ const pipelineStack = new CodepipelineS3LambdaStack(app, `ActionsCodepipelineS3L
 });
 
 // Create the Lambda stack
-const lambdaStack = new LambdaStack(app, `ActionsCodepipelineLambdaStack-${environment}`, {
+const lambdaStack = new LambdaStack(app, `ActionCodepipelineLambdaStack-${environment}`, {
   sourceBucketName: config.sourceBucketName,
   destinationBucketName: config.destinationBucketName,
   env: {

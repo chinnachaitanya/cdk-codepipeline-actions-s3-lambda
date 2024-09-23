@@ -9,7 +9,7 @@
       "Arn"
      ]
     },
-    "BucketName": "actions-test-source-bucket-pipeline-s3lambda",
+    "BucketName": "action-test-source-bucket-pipeline-s3lambda",
     "NotificationConfiguration": {
      "LambdaFunctionConfigurations": [
       {
@@ -28,13 +28,13 @@
     "Managed": false
    },
    "DependsOn": [
-    "SourceBucketAllowBucketNotificationsToActionsCodepipelineLambdaStacktestS3LambdaHandler898C97E65BD0E780"
+    "SourceBucketAllowBucketNotificationsToActionCodepipelineLambdaStacktestS3LambdaHandler101A5CE521BD3F03"
    ],
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/SourceBucket/Notifications/Resource"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/SourceBucket/Notifications/Resource"
    }
   },
-  "SourceBucketAllowBucketNotificationsToActionsCodepipelineLambdaStacktestS3LambdaHandler898C97E65BD0E780": {
+  "SourceBucketAllowBucketNotificationsToActionCodepipelineLambdaStacktestS3LambdaHandler101A5CE521BD3F03": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunction",
@@ -46,10 +46,10 @@
     },
     "Principal": "s3.amazonaws.com",
     "SourceAccount": "011528270026",
-    "SourceArn": "arn:aws:s3:::actions-test-source-bucket-pipeline-s3lambda"
+    "SourceArn": "arn:aws:s3:::action-test-source-bucket-pipeline-s3lambda"
    },
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/SourceBucket/AllowBucketNotificationsToActionsCodepipelineLambdaStacktestS3LambdaHandler898C97E6"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/SourceBucket/AllowBucketNotificationsToActionCodepipelineLambdaStacktestS3LambdaHandler101A5CE5"
    }
   },
   "S3LambdaHandlerServiceRole16A48A12": {
@@ -83,7 +83,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/S3LambdaHandler/ServiceRole/Resource"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/S3LambdaHandler/ServiceRole/Resource"
    }
   },
   "S3LambdaHandlerServiceRoleDefaultPolicyD12EAEF5": {
@@ -98,8 +98,8 @@
        ],
        "Effect": "Allow",
        "Resource": [
-        "arn:aws:s3:::actions-test-destination-bucket-pipeline-s3lambda/*",
-        "arn:aws:s3:::actions-test-source-bucket-pipeline-s3lambda/*"
+        "arn:aws:s3:::action-test-destination-bucket-pipeline-s3lambda/*",
+        "arn:aws:s3:::action-test-source-bucket-pipeline-s3lambda/*"
        ]
       },
       {
@@ -110,8 +110,8 @@
        ],
        "Effect": "Allow",
        "Resource": [
-        "arn:aws:s3:::actions-test-source-bucket-pipeline-s3lambda",
-        "arn:aws:s3:::actions-test-source-bucket-pipeline-s3lambda/*"
+        "arn:aws:s3:::action-test-source-bucket-pipeline-s3lambda",
+        "arn:aws:s3:::action-test-source-bucket-pipeline-s3lambda/*"
        ]
       },
       {
@@ -126,8 +126,8 @@
        ],
        "Effect": "Allow",
        "Resource": [
-        "arn:aws:s3:::actions-test-destination-bucket-pipeline-s3lambda",
-        "arn:aws:s3:::actions-test-destination-bucket-pipeline-s3lambda/*"
+        "arn:aws:s3:::action-test-destination-bucket-pipeline-s3lambda",
+        "arn:aws:s3:::action-test-destination-bucket-pipeline-s3lambda/*"
        ]
       }
      ],
@@ -141,7 +141,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/S3LambdaHandler/ServiceRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/S3LambdaHandler/ServiceRole/DefaultPolicy/Resource"
    }
   },
   "S3LambdaHandler7F265C94": {
@@ -153,7 +153,7 @@
     },
     "Environment": {
      "Variables": {
-      "DESTINATION_BUCKET": "actions-test-destination-bucket-pipeline-s3lambda"
+      "DESTINATION_BUCKET": "action-test-destination-bucket-pipeline-s3lambda"
      }
     },
     "Handler": "handler.handler",
@@ -170,7 +170,7 @@
     "S3LambdaHandlerServiceRole16A48A12"
    ],
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/S3LambdaHandler/Resource",
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/S3LambdaHandler/Resource",
     "aws:asset:path": "asset.71f07d1a2fd0e686f1a0bd10172b2a522e159fee519a7d5e4b4d715dcc8a415e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
@@ -207,7 +207,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource"
    }
   },
   "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36": {
@@ -234,7 +234,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource"
    }
   },
   "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691": {
@@ -259,7 +259,7 @@
     "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
    ],
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource"
    }
   },
   "CDKMetadata": {
@@ -268,7 +268,7 @@
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/z2KSQqDQBBFz+K+rTiQ7KOQtegBpGxLKYdusLojQbx7UElW7/0hgfgeQRTgKqFux3DiBrbKoR4VrlJvkkLm9UguQyE14dy0CFvemYKWmUXYGvXyRrtD8s78fFeMM2ylneioTxZ2Yv054mW7krRGEXICzwP7eSWxftGk/nJulcOeTb8rY1uCQW7vJIL4AVEwCHO4eON4JigvfgEtgvqQ1wAAAA=="
    },
    "Metadata": {
-    "aws:cdk:path": "ActionsCodepipelineLambdaStack-test/CDKMetadata/Default"
+    "aws:cdk:path": "ActionCodepipelineLambdaStack-test/CDKMetadata/Default"
    }
   }
  },
