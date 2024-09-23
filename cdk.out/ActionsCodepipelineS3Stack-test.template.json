@@ -38,7 +38,7 @@
     "Ref": "SourceBucketDDD2130A"
    },
    "Export": {
-    "Name": "SrcBucket"
+    "Name": "SBucket"
    }
   },
   "DestinationBucketNameOutput": {
@@ -46,7 +46,7 @@
     "Ref": "DestinationBucket4BECDB47"
    },
    "Export": {
-    "Name": "DestBucket"
+    "Name": "DBucket"
    }
   }
  },
