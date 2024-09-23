@@ -36,11 +36,17 @@
   "SourceBucketNameOutput": {
    "Value": {
     "Ref": "SourceBucketDDD2130A"
+   },
+   "Export": {
+    "Name": "SBucket-ActionsCodepipelineS3Stack-test"
    }
   },
   "DestinationBucketNameOutput": {
    "Value": {
     "Ref": "DestinationBucket4BECDB47"
+   },
+   "Export": {
+    "Name": "DBucket-ActionsCodepipelineS3Stack-test"
    }
   }
  },
