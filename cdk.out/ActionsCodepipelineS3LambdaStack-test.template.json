@@ -261,7 +261,7 @@
          "Version": "1"
         },
         "Configuration": {
-         "StackName": "S3StackCDK-test",
+         "StackName": "S3StackCDK-Actions",
          "Capabilities": "CAPABILITY_NAMED_IAM",
          "RoleArn": {
           "Fn::GetAtt": [
@@ -294,7 +294,7 @@
          "Version": "1"
         },
         "Configuration": {
-         "StackName": "LambdaStackCDK-test",
+         "StackName": "LambdaStackCDK-Actions",
          "Capabilities": "CAPABILITY_NAMED_IAM",
          "RoleArn": {
           "Fn::GetAtt": [
@@ -485,7 +485,7 @@
         "cloudformation:ValidateTemplate"
        ],
        "Effect": "Allow",
-       "Resource": "arn:aws:cloudformation:us-east-1:011528270026:stack/S3StackCDK-test/*"
+       "Resource": "arn:aws:cloudformation:us-east-1:011528270026:stack/S3StackCDK-Actions/*"
       }
      ],
      "Version": "2012-10-17"
@@ -651,7 +651,7 @@
         "cloudformation:ValidateTemplate"
        ],
        "Effect": "Allow",
-       "Resource": "arn:aws:cloudformation:us-east-1:011528270026:stack/LambdaStackCDK-test/*"
+       "Resource": "arn:aws:cloudformation:us-east-1:011528270026:stack/LambdaStackCDK-Actions/*"
       }
      ],
      "Version": "2012-10-17"
