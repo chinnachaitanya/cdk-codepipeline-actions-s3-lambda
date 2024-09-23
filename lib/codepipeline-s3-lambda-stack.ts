@@ -16,8 +16,8 @@ export class CodepipelineS3LambdaStack extends cdk.Stack {
     const { sourceAction, sourceOutput } = props;
 
     // Define the pipeline
-    const pipeline = new codepipeline.Pipeline(this, 'MyPipelineActions', {
-      pipelineName: 'MyS3LambdaPipelineCDK',
+    const pipeline = new codepipeline.Pipeline(this, 'MyCodePipelineActions', {
+      pipelineName: 'MyS3LambdaCodePipeline',
     });
 
     // Add the source stage to the pipeline (GitHub)
